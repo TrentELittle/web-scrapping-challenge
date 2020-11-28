@@ -16,7 +16,7 @@ executable_path = {'executable_path': 'C:/chromedriver'}
 browser = Browser("chrome", **executable_path, headless=False)
 
 
-def headline():
+def headline(browser):
     """Scraping top headline of Nasa Mars News"""
 
     #Run browser and visit Nasa Mars News site
@@ -40,9 +40,9 @@ def headline():
 
     # browser.quit()
 
-    return(output)
+    return news_title, news_p
 
-def featured_image():
+def featured_image(browser):
     """Scraping featured image from JPL Mars Space Images"""
 
 
@@ -63,7 +63,7 @@ def featured_image():
 
     # browser.quit()
 
-    return(output)
+    return featured_image_url
 
 
 def mars_info():
@@ -79,9 +79,9 @@ def mars_info():
     output = print(mars_table)
     # browser.quit()
 
-    return(output)
+    return mars_table
 
-def hemispheres(): 
+def hemispheres(browser): 
     """Obtain high res images for each of Mar's hemispheres from USGS Astrogeology site"""
 
     # Path to USGS Astrogeology site and open in browser
@@ -123,19 +123,19 @@ def hemispheres():
 
     browser.quit()
 
-    return(hemispheres)
+    return hemispheres_image_urls
 
 def scrape():
     executable_path = {'executable_path': 'C:/chromedriver'}
     browser = Browser("chrome", **executable_path, headless=False)
     news_title, news_p = headline(browser)
-    img_url = featured_image(browser)
-    mars_info = mars_info(browser)
+    featured_image_url = featured_image(browser)
+    mars_info = mars_info()
     hemisphere_image_urls = hemispheres(browser)
 
     data = {"News Title": news_title,
             "News Paragraph": news_p,
-            "Featured Image": img_url,
+            "Featured Image": featured_image_url,
             "Mars Facts": mars_info,
             "Hemisphere Photos": hemisphere_image_urls
             }
@@ -150,4 +150,4 @@ if __name__ == "__main__":
     # featured_image()
     # mars_info()
     # hemispheres()
-    print(scrape())
+    print(scrape_all())
